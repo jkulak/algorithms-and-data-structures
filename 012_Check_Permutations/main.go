@@ -35,23 +35,27 @@ func isPermutation(a, b string) bool {
 	return false
 }
 
-type sortRunes []rune
+// Define a type that is an array of runes
+type runeList []rune
 
-func (s sortRunes) Less(i, j int) bool {
+// Add Less function to the type
+func (s runeList) Less(i, j int) bool {
 	return s[i] < s[j]
 }
 
-func (s sortRunes) Swap(i, j int) {
+// Add Swap method to the type
+func (s runeList) Swap(i, j int) {
 	s[i], s[j] = s[j], s[i]
 }
 
-func (s sortRunes) Len() int {
+// Add Len method to the type
+func (s runeList) Len() int {
 	return len(s)
 }
 
-func sortString(s string) string {
+func sortRuneList(s string) string {
 	r := []rune(s)
-	sort.Sort(sortRunes(r))
+	sort.Sort(runeList(r))
 	return string(r)
 }
 
@@ -61,8 +65,8 @@ func isPermutationSort(a, b string) bool {
 		return false
 	}
 
-	c := sortString(a)
-	d := sortString(b)
+	c := sortRuneList(a)
+	d := sortRuneList(b)
 
 	if c == d {
 		return true
