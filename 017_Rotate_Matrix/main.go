@@ -14,10 +14,11 @@ type testData struct {
 }
 
 func logTest(key int, val testData, res Matrix, verbose bool) {
+
 	if reflect.DeepEqual(res, val.b) {
-		fmt.Printf("☠️ ")
-	} else {
 		fmt.Printf("✅ ")
+	} else {
+		fmt.Printf("☠️ ")
 	}
 
 	if verbose {
@@ -36,10 +37,29 @@ type Px [4]byte
 // Matrix type is a 2D array of Pixels
 type Matrix [][]Px
 
-func rotatMatrix90(a Matrix) Matrix {
+// rotatMatrix90 rotates the matrix 90 clockwise and it's an in-place rotation
+func rotatMatrix90(m Matrix) Matrix {
+	lenm := len(m)
+	for layer := 0; layer < (lenm / 2); layer++ {
+		first := layer
+		last := lenm - 1 - layer
 
-	// ...
-	return a
+		for i := first; i < last; i++ {
+			offset := i - first
+
+			// Save top
+			top := m[first][i]
+			// left -> top
+			m[first][i] = m[last-offset][first]
+			// bottom -> left
+			m[last-offset][first] = m[last][last-offset]
+			// right -> bottom
+			m[last][last-offset] = m[i][last]
+			// top -> right
+			m[i][last] = top
+		}
+	}
+	return m
 }
 
 func main() {
@@ -52,12 +72,6 @@ func main() {
 	var testNumber int = *paramTestNumber
 
 	var start time.Time = time.Now()
-
-	// m[row][column]
-
-	// 0,0 -> 0,2  0,1 -> 1,2  0,2 -> 2,2
-	// 1,0 -> 0,1  1,1 -> 1,1  1,2 -> 2,1
-	// 2,0 -> 0,0  2,1 -> 1,0  2,2 -> 2,0
 
 	m := Matrix{
 		[]Px{Px{1, 2, 3, 1}, Px{1, 2, 3, 2}, Px{1, 2, 3, 3}},
