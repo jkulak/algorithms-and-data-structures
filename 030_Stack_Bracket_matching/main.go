@@ -1,14 +1,25 @@
 package main
 
-import "github.com/jkulak/go-data-structures"
+import datastruct "github.com/jkulak/go-data-structures"
 
-func main() {
+func bracketsMatch(s string) bool {
+	stack := datastruct.NewStack()
 
-	s := stack.New()
-	s = s.Populate([]int{1, 2, 3, 4, 5, 6, 7})
-	s = s.Push(4)
-	s = s.Push(4)
-	s = s.Push(4)
-	s, _ = s.Pop()
-	s.Print()
+	for _, v := range s {
+		if v == 91 || v == 40 {
+			stack = stack.Push(v)
+		} else {
+			if stack.Length() == 0 {
+				return false
+			}
+			if v == 93 && stack.Top() != 91 {
+				return false
+			}
+			if v == 41 && stack.Top() != 40 {
+				return false
+			}
+			stack, _ = stack.Pop()
+		}
+	}
+	return stack.Length() == 0
 }
