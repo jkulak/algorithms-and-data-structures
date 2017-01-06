@@ -53,15 +53,12 @@ func printList(l *list.List) {
  */
 
 func isPalindrome(l *list.List) bool {
-
 	tmp := new(list.List)
-
 	e := l.Front()
 	for e != nil {
 		tmp.PushFront(e.Value.(int))
 		e = e.Next()
 	}
-
 	return areListsEqual(l, tmp)
 }
 
